@@ -3,3 +3,5 @@ node_modules/
 hooks/
 plugins/
 android/
+*.pyc
+webapp/venv/
