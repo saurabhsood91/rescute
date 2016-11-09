@@ -21,31 +21,79 @@ var app = {
     initialize: function() {
         this.bindEvents();
     },
-    // Bind Event Listeners
-    //
-    // Bind any events that are required on startup. Common events are:
-    // 'load', 'deviceready', 'offline', and 'online'.
+
+    takePicture: function() {
+        if(navigator.camera) {
+            navigator.camera.getPicture($.proxy(this.onSuccess, this), this.onFail, { quality: 25,
+                destinationType: Camera.DestinationType.DATA_URL
+            });
+        }
+    },
+
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+        $('#btn-report-lost').click($.proxy(this.takePicture, this));
     },
-    // deviceready Event Handler
-    //
-    // The scope of 'this' is the event. In order to call the 'receivedEvent'
-    // function, we must explicitly call 'app.receivedEvent(...);'
+
+    onSuccess: function(data) {
+        // console.log(data);
+        // Clear everything
+        var content = $('#content');
+        content.empty();
+
+        var img = $('<img />', {
+            'id': 'img-captured-photo',
+            'src': "data:image/jpeg;base64," + data
+        });
+
+        var btnRetake = $('<button />', {
+            'id': 'btn-retake',
+            'class': 'btn btn-primary form-control'
+        }).html('Retake Photo');
+
+        btnRetake.click($.proxy(this.takePicture, this));
+
+        var btnContinue = $('<button />', {
+            'id': 'btn-continue',
+            'class': 'btn btn-primary form-control'
+        }).html('Continue');
+
+        btnContinue.click(function(){
+            var baseUrl = 'http://10.0.0.228:80';
+            var url = baseUrl + '/uploadImage/';
+            $.post(url, {
+                imageData: data,
+                // onSuccess: function(d) {
+                //     console.log(baseUrl + d);
+                // },
+                onFailure: function(err) {
+                    console.log(err);
+                }
+            }).done(function(d) {
+                console.log(baseUrl + d);
+            });
+        });
+
+        var imgContainer = $('<div />', {
+             'class': 'img-container'
+        });
+
+        var mainContainer = $('<div />');
+
+        imgContainer.append(img);
+        mainContainer.append(imgContainer);
+        mainContainer.append(btnRetake);
+        mainContainer.append(btnContinue);
+        content.append(mainContainer);
+    },
+
+    onFail: function(err) {
+        console.log(err);
+    },
+
     onDeviceReady: function() {
-        app.receivedEvent('deviceready');
+        // app.receivedEvent('deviceready');
     },
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
-        console.log('Received Event: ' + id);
-    }
 };
 
 app.initialize();
