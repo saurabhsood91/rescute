@@ -17,11 +17,13 @@
  * under the License.
  */
 var app = {
-    baseUrl: 'http://10.0.0.184:8080',
+    baseUrl: 'http://10.0.0.228:8000',
     // Application Constructor
     initialize: function() {
         this.bindEvents();
     },
+
+    baseHTML: $('#content').html(),
 
     takePicture: function() {
         if(navigator.camera) {
@@ -130,7 +132,7 @@ var app = {
         var mobileNumberContainer = $('<div />');
         var mobileNumberText = $('<p />').html('Enter Mobile Number');
         var mobileNumberInput = $('<input />', {
-              'type': 'text',
+              'type': 'number',
               'class': 'form-control',
               'id': 'txtMobileNumber'
         });
@@ -185,7 +187,9 @@ var app = {
             // Make AJAX call
             var addReportURL = baseUrl + '/postReport/';
             $.post(addReportURL, data).done(function(d) {
-                console.log(d);
+                // console.log(d);
+                alert('Successfully Reported animal');
+                $('#content').empty().html(self.baseHTML);
             });
         });
 
