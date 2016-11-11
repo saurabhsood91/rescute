@@ -6,3 +6,12 @@
     height: 200px;
     width: 200px;
 }
+
+#img-summary {
+    height: 200px;
+    width: 200px;
+}
+
+.img-summary-container {
+    margin-left: 25%;
+}
