@@ -5,3 +5,4 @@ plugins/
 android/
 *.pyc
 webapp/venv/
+webapp/rescute/db.sqlite3
