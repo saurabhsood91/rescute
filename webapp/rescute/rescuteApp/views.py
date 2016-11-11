@@ -7,8 +7,10 @@ from base64 import b64decode
 import json
 import os
 from rescute.settings import MEDIA_ROOT
+from models import Category, Report
 # Create your views here.
 import uuid
+import json
 
 def get_hash(image):
     # m = hashlib.sha256()
@@ -20,6 +22,34 @@ def get_hash(image):
 
 def index(request):
     return HttpResponse("Hello")
+
+def getCategories(request):
+    animal_list = []
+    for categoryObject in Category.objects.all():
+        animal_list.append( categoryObject.animal_type )
+    resp = json.dumps(sorted(animal_list))
+    return HttpResponse(resp)
+
+@csrf_exempt
+def postReport(request):
+    if request.method == 'POST':
+        print request.POST
+        print request.POST.get('animalType')
+        categoryObject = Category.objects.get(animal_type = request.POST.get('animalType'))
+        latitude = request.POST.get('latitude')
+        longitude = request.POST.get('longitude')
+        mobile_number = request.POST.get('mobileNumber')
+        image_path = request.POST.get('imagePath')
+        reportObject = Report(
+            animal_type_id = categoryObject.id,
+            latitude = latitude,
+            longitude = longitude,
+            mobile_number = mobile_number,
+            image_path = image_path,
+        )
+        reportObject.save()
+    return HttpResponse( reportObject.id )
+    
 
 @csrf_exempt
 def uploadImage(request):
