@@ -11,6 +11,7 @@ from models import Category, Report
 # Create your views here.
 import uuid
 import json
+import urllib2
 
 def get_hash(image):
     # m = hashlib.sha256()
@@ -40,12 +41,17 @@ def postReport(request):
         longitude = request.POST.get('longitude')
         mobile_number = request.POST.get('mobileNumber')
         image_path = request.POST.get('imagePath')
+        webUrl = ("http://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s"%(latitude,longitude))
+        urlstream = urllib2.urlopen(webUrl)
+        data = json.loads(urlstream.read())
+        location = data['results'][0]["formatted_address"]
         reportObject = Report(
             animal_type_id = categoryObject.id,
             latitude = latitude,
             longitude = longitude,
             mobile_number = mobile_number,
             image_path = image_path,
+            location = location
         )
         reportObject.save()
     return HttpResponse( reportObject.id )

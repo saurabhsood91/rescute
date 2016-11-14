@@ -26,3 +26,4 @@ class Report(models.Model):
 	report_date = models.DateTimeField(auto_now_add=True)
 	image_path = models.CharField(max_length=200)
 	status = models.IntegerField(choices=REPORT_STATUS, default=0 )
+	location = models.CharField(max_length=300, default="Boulder")
