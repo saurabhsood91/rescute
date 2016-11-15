@@ -50,6 +50,7 @@ def getReports(request):
         content['report_date'] = reportObject.report_date.strftime('%Y-%m-%d %H:%M:%S')
         content['image_path'] = reportObject.image_path
         content['status'] = reportObject.get_status_display()
+        content['location'] = reportObject.location
         report_list.append(content)
         # content = reportObject.__dict__
         # # content.remove('_state')
@@ -88,6 +89,7 @@ def getReportsFilter(request,parameters,values):
         content['report_date'] = reportObject.report_date.strftime('%Y-%m-%d %H:%M:%S')
         content['image_path'] = reportObject.image_path
         content['status'] = reportObject.get_status_display()
+        content['location'] = reportObject.location
         report_list.append(content)
         # content = reportObject.__dict__
         # # content.remove('_state')
