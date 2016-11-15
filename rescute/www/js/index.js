@@ -33,9 +33,95 @@ var app = {
         }
     },
 
+    findNearby: function() {
+        var self = this;
+        var content = $('#content');
+        content.empty();
+
+        var grid = $('<div/>');
+
+        // get all the reports
+        var url = self.baseUrl + '/getReports/';
+        $.getJSON(url).done(function(reports) {
+            reports.forEach(function(report, index) {
+                var img = $('<img />', {
+                    'src': self.baseUrl + report.image_path,
+                    'class': 'img-grid'
+                });
+
+                var animalType = $('<p/>').html(report.animal_type);
+                if(index % 2 == 0) {
+                    // create a row
+                    var row = $('<div />', {
+                        'class': 'row'
+                    });
+
+                    var reportContainer = $('<div />', {
+                        'class': 'col-xs-5 col-xs-offset-1'
+                    });
+
+                    reportContainer.click(function() {
+                        self.showAnimalDetails(report);
+                    });
+
+                    reportContainer.append(img);
+                    reportContainer.append(animalType);
+                    row.append(reportContainer);
+                    grid.append(row);
+                } else {
+                    // Get the last row
+                    var rows = $('.row');
+                    var row = $(rows[rows.length - 1]);
+
+                    var reportContainer = $('<div />', {
+                        'class': 'col-xs-5 col-md-offset-1'
+                    });
+
+                    reportContainer.click(function() {
+                        self.showAnimalDetails(report);
+                    });
+
+                    reportContainer.append(img);
+                    reportContainer.append(animalType);
+                    row.append(reportContainer);
+                }
+            });
+        });
+        content.append(grid);
+    },
+
+    showAnimalDetails: function(report) {
+        var content = $('#content');
+        content.empty();
+
+        var container = $('<div/>');
+
+        var img = $('<img/>', {
+            src: this.baseUrl + report.image_path,
+            id: 'img-summary'
+        });
+
+        var imgContainer = $('<div/>');
+        var animalType = $('<p/>').html('Animal Type: ' + report.animal_type);
+        var latitude = $('<p/>').html('Latitude: ' + report.latitude);
+        var longitude = $('<p/>').html('Longitude: ' + report.longitude);
+
+        var gmapsString = "geo:" + report.latitude + ',' + report.longitude;
+        var gmaps = $('<a class="btn btn-primary" href="' + gmapsString + '">Navigate</a>');
+
+        imgContainer.append(img);
+        container.append(imgContainer);
+        container.append(animalType);
+        container.append(latitude);
+        container.append(longitude);
+        container.append(gmaps);
+        content.append(container);
+    },
+
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
         $('#btn-report-lost').click($.proxy(this.takePicture, this));
+        $('#btn-find-nearby').click($.proxy(this.findNearby, this));
     },
 
     onSuccess: function(data) {
@@ -66,14 +152,10 @@ var app = {
             var url = self.baseUrl + '/uploadImage/';
             $.post(url, {
                 imageData: data,
-                // onSuccess: function(d) {
-                //     console.log(baseUrl + d);
-                // },
                 onFailure: function(err) {
                     console.log(err);
                 }
             }).done(function(d) {
-                // console.log(baseUrl + d);
                 self._showSummary(d);
             });
         });
@@ -181,7 +263,7 @@ var app = {
                 latitude: latitude,
                 longitude: longitude,
                 mobileNumber: mobilePhoneNumber,
-                imagePath: imageURL
+                imagePath: d
             };
 
             // Make AJAX call
