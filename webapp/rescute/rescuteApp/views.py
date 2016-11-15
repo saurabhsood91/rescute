@@ -7,11 +7,16 @@ from base64 import b64decode
 import json
 import os
 from rescute.settings import MEDIA_ROOT
-from models import Category, Report
+from models import Category, Report, REPORT_STATUS
 # Create your views here.
 import uuid
 import json
 import urllib2
+
+
+status_reverse = dict((v, k) for k, v in REPORT_STATUS)
+
+
 
 def get_hash(image):
     # m = hashlib.sha256()
@@ -29,6 +34,66 @@ def getCategories(request):
     for categoryObject in Category.objects.all():
         animal_list.append( categoryObject.animal_type )
     resp = json.dumps(sorted(animal_list))
+    return HttpResponse(resp)
+
+
+@csrf_exempt
+def getReports(request):
+    report_list = []
+    for reportObject in Report.objects.all():
+        content = {}
+        content['id'] = reportObject.id
+        content['animal_type'] = reportObject.animal_type.animal_type
+        content['latitude'] = reportObject.latitude
+        content['longitude'] = reportObject.longitude
+        content['mobile_number'] = reportObject.mobile_number
+        content['report_date'] = reportObject.report_date.strftime('%Y-%m-%d %H:%M:%S')
+        content['image_path'] = reportObject.image_path
+        content['status'] = reportObject.get_status_display()
+        report_list.append(content)
+        # content = reportObject.__dict__
+        # # content.remove('_state')
+        # del content['_state']
+        # report_list.append( content )
+    resp = json.dumps(report_list)
+    return HttpResponse(resp)
+
+
+@csrf_exempt
+def getReportsFilter(request,parameters,values):
+    report_list = []
+    parameterList = parameters.strip().split(",")
+    valueList = values.strip().split(",")
+    queryObject = Report.objects.all()
+    if len(parameterList) == len(valueList):
+        filterDict = {}
+        for param,value in zip(parameterList,valueList):
+            if param == "animal_type":
+                filterDict['animal_type__animal_type'] = value
+                # queryObject = queryObject.filter(animal_type__animal_type=value)
+            elif param == "status":
+                filterDict['status'] = status_reverse[value]
+            else:
+                filterDict[param] = value
+                # queryObject = queryObject.filter(param=value)
+            # print x,y
+            # queryObject.filter
+    for reportObject in queryObject.filter(**filterDict):
+        content = {}
+        content['id'] = reportObject.id
+        content['animal_type'] = reportObject.animal_type.animal_type
+        content['latitude'] = reportObject.latitude
+        content['longitude'] = reportObject.longitude
+        content['mobile_number'] = reportObject.mobile_number
+        content['report_date'] = reportObject.report_date.strftime('%Y-%m-%d %H:%M:%S')
+        content['image_path'] = reportObject.image_path
+        content['status'] = reportObject.get_status_display()
+        report_list.append(content)
+        # content = reportObject.__dict__
+        # # content.remove('_state')
+        # del content['_state']
+        # report_list.append( content )
+    resp = json.dumps(report_list)
     return HttpResponse(resp)
 
 @csrf_exempt
