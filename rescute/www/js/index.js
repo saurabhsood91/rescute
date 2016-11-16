@@ -107,7 +107,7 @@ var app = {
         });
 
         var filterDropdown = $('<div/>', {
-            'class': 'dropdown'
+            'class': 'dropdown col-xs-4'
         });
         var button = $('<button/>', {
             'class': 'btn btn-default dropdown-toggle',
@@ -124,14 +124,30 @@ var app = {
         button.append(sortSpan);
 
         var ul = $('<ul class="dropdown-menu" aria-labelledby="btn-sort"><li><a href="#">Animal Type</a></li><li><a href="#">Location</a></li><li><a href="#">Status</a></li></ul>');
+
         filterDropdown.append(button);
         filterDropdown.append(ul);
+
+
+        // Filter
+        var filterDiv = $('<div/>', {
+            class: 'col-xs-4'
+        });
+        var filterButton = $('<button/>', {
+            'class': 'btn btn-default'
+        });
+
+        var spanFilter = $('<span/>', {
+            'class': 'glyphicon glyphicon-filter'
+        }).html('Filter');
+        filterButton.append(spanFilter);
+        filterDiv.append(filterButton);
 
         form.append(input);
         outerDiv.append(form);
         filterRow.append(outerDiv);
         filterRow.append(filterDropdown);
-
+        filterRow.append(filterDiv);
 
         content.append(filterRow);
         content.append(grid);
