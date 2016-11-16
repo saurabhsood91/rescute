@@ -34,7 +34,7 @@ var app = {
     },
 
     showFilters: function() {
-        $('#modal-filters').modal('show');        
+        $('#modal-filters').modal('show');
     },
 
     findNearby: function() {
@@ -61,7 +61,7 @@ var app = {
                     });
 
                     var reportContainer = $('<div />', {
-                        'class': 'col-xs-5 col-xs-offset-1'
+                        'class': 'col-xs-5'
                     });
 
                     reportContainer.click(function() {
@@ -78,7 +78,7 @@ var app = {
                     var row = $(rows[rows.length - 1]);
 
                     var reportContainer = $('<div />', {
-                        'class': 'col-xs-5 col-md-offset-1'
+                        'class': 'col-xs-5 col-xs-offset-1'
                     });
 
                     reportContainer.click(function() {
