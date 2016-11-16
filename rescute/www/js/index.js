@@ -203,17 +203,31 @@ var app = {
             'src': "data:image/jpeg;base64," + data
         });
 
+        var retakeRow = $('<div/>', {
+            'class': 'row',
+            'id': 'retake-row'
+        });
+
         var btnRetake = $('<button />', {
             'id': 'btn-retake',
-            'class': 'btn btn-primary form-control'
+            'class': 'btn btn-primary col-xs-5 col-xs-offset-3'
         }).html('Retake Photo');
+
+        retakeRow.append(btnRetake);
 
         btnRetake.click($.proxy(this.takePicture, this));
 
+        var continueRow = $('<div/>', {
+            'class': 'row',
+            'id': 'continue-row'
+        });
+
         var btnContinue = $('<button />', {
             'id': 'btn-continue',
-            'class': 'btn btn-primary form-control'
+            'class': 'btn btn-primary col-xs-5 col-xs-offset-3'
         }).html('Continue');
+
+        continueRow.append(btnContinue);
 
         btnContinue.click(function(){
             // var self = this;
@@ -236,8 +250,8 @@ var app = {
 
         imgContainer.append(img);
         mainContainer.append(imgContainer);
-        mainContainer.append(btnRetake);
-        mainContainer.append(btnContinue);
+        mainContainer.append(retakeRow);
+        mainContainer.append(continueRow);
         content.append(mainContainer);
     },
 
