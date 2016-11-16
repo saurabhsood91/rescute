@@ -272,7 +272,10 @@ var app = {
         imgContainer.append(img);
 
         // Categories
-        var categoriesText = $('<p/>').html('Select a type of animal');
+        var categoriesText = $('<label/>', {
+            'for': 'categories',
+            'style': 'width: 100%; margin-top: 10px;'
+        }).html('Select a type of animal');
         var categoriesDiv = $('<div />');
         var ul = $('<ul />');
         categoriesDiv.append(categoriesText);
@@ -294,7 +297,9 @@ var app = {
 
         // Input to show the mobile number
         var mobileNumberContainer = $('<div />');
-        var mobileNumberText = $('<p />').html('Enter Mobile Number');
+        var mobileNumberText = $('<label />', {
+            'for': 'txtMobileNumber'
+        }).html('Enter Mobile Number');
         var mobileNumberInput = $('<input />', {
               'type': 'number',
               'class': 'form-control',
@@ -306,8 +311,12 @@ var app = {
         // Geolocation container
         var geolocationContainer = $('<div />');
         var geolocationText = $('<p />');
-        var latitudeText = $('<p/>').html('Latitude');
-        var longitudeText = $('<p />').html('Longitude');
+        var latitudeText = $('<label/>', {
+            'for': 'latitude'
+        }).html('Latitude');
+        var longitudeText = $('<label />', {
+            'for': 'longitude'
+        }).html('Longitude');
         var latitude = $('<p/>', {
             'id': 'geolocation-latitude'
         });
@@ -329,9 +338,13 @@ var app = {
         });
 
         // Buttons
+        var buttonRow = $('<div/>', {
+            'class': 'row',
+            'id': 'report-row'
+        });
         var reportButton = $('<button />', {
             'type': 'button',
-            'class': 'btn btn-primary form-control'
+            'class': 'btn btn-primary col-xs-4 col-xs-offset-1'
         }).html('Report');
 
         reportButton.click(function() {
@@ -359,12 +372,14 @@ var app = {
 
         var cancelButton = $('<button />', {
             'type': 'button',
-            'class': 'btn btn-danger form-control'
+            'class': 'btn btn-danger col-xs-4 col-xs-offset-1'
         }).html('Cancel');
+        buttonRow.append(cancelButton);
+        buttonRow.append(reportButton);
 
         var btnContainer = $('<div />');
-        btnContainer.append(reportButton);
-        btnContainer.append(cancelButton);
+        btnContainer.append(buttonRow);
+        // btnContainer.append(cancelRow);
 
         // Combine the entire container
         content.empty();

@@ -12,6 +12,8 @@
 #img-summary {
     height: 200px;
     width: 200px;
+    margin-top: 70px;
+    border: 1px solid black;
 }
 
 .img-summary-container {
@@ -54,5 +56,10 @@ form.form-search:before {
 }
 
 #continue-row {
+    margin-top: 10px;
+}
+
+#report-row {
+    margin-bottom: 20px;
     margin-top: 10px;
 }
