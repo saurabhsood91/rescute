@@ -17,7 +17,7 @@
  * under the License.
  */
 var app = {
-    baseUrl: 'http://10.0.0.228:8000',
+    baseUrl: 'http://10.0.0.46:8000',
     // Application Constructor
     initialize: function() {
         this.bindEvents();
@@ -87,6 +87,53 @@ var app = {
                 }
             });
         });
+
+        // Filters
+        var filterRow = $('<div/>', {
+            'class': 'row filters'
+        });
+
+        var outerDiv = $('<div/>', {
+            'class': 'outer-div col-xs-4'
+        });
+
+        var form = $('<form/>', {
+            'class': 'form-search form-inline'
+        });
+        var input = $('<input/>', {
+            'class': 'form-control search-query',
+            'type': 'text',
+            'placeholder': 'Search...'
+        });
+
+        var filterDropdown = $('<div/>', {
+            'class': 'dropdown'
+        });
+        var button = $('<button/>', {
+            'class': 'btn btn-default dropdown-toggle',
+            'id': 'btn-sort',
+            'type': 'button',
+            'data-toggle': 'dropdown',
+            'aria-haspopup': 'true',
+            'aria-expanded': 'true'
+        });
+        var sortSpan = $('<div/>', {
+            'class': 'glyphicon glyphicon-sort'
+        });
+        button.append('Sort By');
+        button.append(sortSpan);
+
+        var ul = $('<ul class="dropdown-menu" aria-labelledby="btn-sort"><li><a href="#">Animal Type</a></li><li><a href="#">Location</a></li><li><a href="#">Status</a></li></ul>');
+        filterDropdown.append(button);
+        filterDropdown.append(ul);
+
+        form.append(input);
+        outerDiv.append(form);
+        filterRow.append(outerDiv);
+        filterRow.append(filterDropdown);
+
+
+        content.append(filterRow);
         content.append(grid);
     },
 
