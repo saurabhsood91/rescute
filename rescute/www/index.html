@@ -58,7 +58,7 @@
         </nav>
         <div class="container">
             <div id="content">
-                
+
                     <div class="row" style="margin-top:100px;">
                         <div class="col-xs-offset-2 col-xs-8">
                             <button type="button" class="btn btn-primary form-control" id="btn-report-lost" >Report Lost Animal</button>
@@ -71,6 +71,38 @@
                     </div>
             </div>
         </div>
+        <div class="modal fade" tabindex="-1" role="dialog" id="modal-filters">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title glyphicon glyphicon-filter">&nbsp;Filters</h4>
+              </div>
+              <div class="modal-body">
+                <form class="">
+                    <label for="animalType">Animal Type</label>
+                    <select class="form-control" name="animalType">
+                        <option>Cat</option>
+                        <option>Dog</option>
+                    </select>
+                    <label for="location">Location</label>
+                    <input type="text" name="location" value="" class="form-control">
+                    <label for="status">Status</label>
+                    <select class="form-control" name="status">
+                        <option>Unresolved</option>
+                        <option>Rescue in Progress</option>
+                        <option>Rescued</option>
+                        <option>Adopted</option>
+                    </select>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success">Apply</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
     </body>

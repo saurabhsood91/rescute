@@ -33,6 +33,10 @@ var app = {
         }
     },
 
+    showFilters: function() {
+        $('#modal-filters').modal('show');        
+    },
+
     findNearby: function() {
         var self = this;
         var content = $('#content');
@@ -135,6 +139,8 @@ var app = {
         var filterButton = $('<button/>', {
             'class': 'btn btn-default form-control'
         });
+
+        filterButton.click($.proxy(self.showFilters, self));
 
         var spanFilter = $('<span/>', {
             'class': 'glyphicon glyphicon-filter'
