@@ -110,17 +110,16 @@ var app = {
             'class': 'dropdown col-xs-4'
         });
         var button = $('<button/>', {
-            'class': 'btn btn-default dropdown-toggle',
+            'class': 'btn btn-default dropdown-toggle form-control',
             'id': 'btn-sort',
             'type': 'button',
             'data-toggle': 'dropdown',
             'aria-haspopup': 'true',
             'aria-expanded': 'true'
         });
-        var sortSpan = $('<div/>', {
+        var sortSpan = $('<span/>', {
             'class': 'glyphicon glyphicon-sort'
-        });
-        button.append('Sort By');
+        }).html('&nbsp;Sort');
         button.append(sortSpan);
 
         var ul = $('<ul class="dropdown-menu" aria-labelledby="btn-sort"><li><a href="#">Animal Type</a></li><li><a href="#">Location</a></li><li><a href="#">Status</a></li></ul>');
@@ -134,12 +133,12 @@ var app = {
             class: 'col-xs-4'
         });
         var filterButton = $('<button/>', {
-            'class': 'btn btn-default'
+            'class': 'btn btn-default form-control'
         });
 
         var spanFilter = $('<span/>', {
             'class': 'glyphicon glyphicon-filter'
-        }).html('Filter');
+        }).html('&nbsp;Filter');
         filterButton.append(spanFilter);
         filterDiv.append(filterButton);
 
