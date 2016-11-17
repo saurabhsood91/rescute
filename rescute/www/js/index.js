@@ -177,6 +177,30 @@ var app = {
         var gmapsString = "geo:" + report.latitude + ',' + report.longitude;
         var gmaps = $('<a class="btn btn-primary" href="' + gmapsString + '">Navigate</a>');
 
+        gmaps.click(function() {
+            var rescuedButtonRow = $('<div/>', {
+                'class': 'row rescued-button-row'
+            });
+            var btnRescued = $('<button/>', {
+                'class': 'btn btn-success col-xs-4 col-xs-offset-1'
+            }).html('Rescued');
+
+            btnRescued.click(function() {
+                alert('You have marked the animal as rescued!');
+            });
+
+            var btnNotRescued = $('<button/>', {
+                'class': 'btn btn-danger col-xs-4 col-xs-offset-1'
+            }).html('Not Rescued');
+
+            btnNotRescued.click(function() {
+                alert('You have marked the animal as not rescued!');
+            });
+            rescuedButtonRow.append(btnNotRescued);
+            rescuedButtonRow.append(btnRescued);
+            container.append(rescuedButtonRow);
+        });
+
         imgContainer.append(img);
         container.append(imgContainer);
         container.append(animalType);
