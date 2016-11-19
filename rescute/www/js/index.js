@@ -367,6 +367,7 @@ var app = {
                 // console.log(d);
                 alert('Successfully Reported animal');
                 $('#content').empty().html(self.baseHTML);
+                self.bindEvents();
             });
         });
 
