@@ -174,7 +174,7 @@ var app = {
         var latitude = $('<p/>').html('Latitude: ' + report.latitude);
         var longitude = $('<p/>').html('Longitude: ' + report.longitude);
 
-        var gmapsString = "geo:" + report.latitude + ',' + report.longitude;
+        var gmapsString = "http://maps.google.com/maps?daddr=" + report.latitude + ',' + report.longitude;
         var gmaps = $('<a class="btn btn-primary" href="' + gmapsString + '">Navigate</a>');
 
         gmaps.click(function() {
