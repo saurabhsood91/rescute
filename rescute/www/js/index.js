@@ -173,6 +173,7 @@ var app = {
     },
 
     removeBackShowAnimalDetails: function() {
+        $(document).off('backbutton');
         this.findNearby();
     },
 
@@ -238,10 +239,20 @@ var app = {
         $('#btn-find-nearby').click($.proxy(this.findNearby, this));
     },
 
+    removeBackCamera: function() {
+        $(document).off('backbutton');
+        $('#content').html(this.currentScreenHTML);
+        this.bindEvents();
+    },
+
     onSuccess: function(data) {
         // Clear everything
         var self = this;
         var content = $('#content');
+        var previousScreenContent = content.html();
+        this.currentScreenHTML = previousScreenContent;
+        $(document).on('backbutton', $.proxy(this.removeBackCamera, this));
+
         content.empty();
 
         var img = $('<img />', {
