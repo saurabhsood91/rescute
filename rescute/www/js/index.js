@@ -354,6 +354,20 @@ var app = {
         mobileNumberContainer.append(mobileNumberText);
         mobileNumberContainer.append(mobileNumberInput);
 
+
+        // Additional Comments
+       var additionalCommentsContainer = $('<div />');
+       var additionalCommentsText = $('<label />', {
+           'for': 'txtAdditionalComments'
+       }).html('Additonal Comments');
+       var additionalCommentsInput = $('<textarea />',{
+           // 'type': 'textarea',
+           'class': 'form-control',
+           'id': 'txtAdditionalComments'
+       });
+       additionalCommentsContainer.append(additionalCommentsText);
+       additionalCommentsContainer.append(additionalCommentsInput);
+
         // Geolocation container
         var geolocationContainer = $('<div />');
         var geolocationText = $('<p />');
@@ -398,13 +412,15 @@ var app = {
             var latitude = $('#geolocation-latitude').html();
             var longitude = $('#geolocation-longitude').html();
             var mobilePhoneNumber = $('#txtMobileNumber').val();
+            var additionalComment = $('#txtAdditionalComments').val();
 
             var data = {
                 animalType: selectedCategory,
                 latitude: latitude,
                 longitude: longitude,
                 mobileNumber: mobilePhoneNumber,
-                imagePath: d
+                imagePath: d,
+                additionalComments: additionalComment
             };
 
             // Make AJAX call
@@ -433,6 +449,7 @@ var app = {
         content.append(imgContainer);
         content.append(categoriesDiv);
         content.append(mobileNumberContainer);
+        content.append(additionalCommentsContainer);
         content.append(geolocationContainer);
         content.append(btnContainer);
     },
