@@ -28,7 +28,8 @@ var app = {
     takePicture: function() {
         if(navigator.camera) {
             navigator.camera.getPicture($.proxy(this.onSuccess, this), this.onFail, { quality: 25,
-                destinationType: Camera.DestinationType.DATA_URL
+                destinationType: Camera.DestinationType.DATA_URL,
+                correctOrientation: true
             });
         }
     },
@@ -234,7 +235,7 @@ var app = {
     },
 
     bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
+        document.addEventListener('deviceready', $.proxy(this.onDeviceReady, this), false);
         $('#btn-report-lost').click($.proxy(this.takePicture, this));
         $('#btn-find-nearby').click($.proxy(this.findNearby, this));
     },
@@ -260,31 +261,29 @@ var app = {
             'src': "data:image/jpeg;base64," + data
         });
 
-        var retakeRow = $('<div/>', {
-            'class': 'row',
-            'id': 'retake-row'
-        });
-
         var btnRetake = $('<button />', {
             'id': 'btn-retake',
-            'class': 'btn btn-primary col-xs-5 col-xs-offset-3'
+            'class': 'btn btn-primary col-xs-4 col-xs-offset-1'
         }).html('Retake Photo');
-
-        retakeRow.append(btnRetake);
 
         btnRetake.click($.proxy(this.takePicture, this));
 
-        var continueRow = $('<div/>', {
-            'class': 'row',
-            'id': 'continue-row'
+        var imgLocation = $('<img/>', {
+            'src': 'https://www.mapquestapi.com/staticmap/v4/getmap?key=UShjaMayAC4UkuBJ5nu5rqFuraxzEOQU&size=' + $(document).width() + ',200&type=map&imagetype=jpg&zoom=15&scalebar=false&traffic=false&center=' + self.latitude + ',' + self.longitude + '&xis=https://s.aolcdn.com/os/mapquest/yogi/icons/poi-active.png,1,c,40.015831,-105.27927&ellipse=fill:0x70ff0000|color:0xff0000|width:2|40.00,-105.25,40.04,-105.30',
+            'class': 'img-location'
+        });
+
+        var buttonRow = $('<div/>', {
+            'class': 'row button-row'
         });
 
         var btnContinue = $('<button />', {
             'id': 'btn-continue',
-            'class': 'btn btn-primary col-xs-5 col-xs-offset-3'
+            'class': 'btn btn-primary col-xs-4 col-xs-offset-2'
         }).html('Continue');
 
-        continueRow.append(btnContinue);
+        buttonRow.append(btnRetake);
+        buttonRow.append(btnContinue);
 
         btnContinue.click(function(){
             // var self = this;
@@ -307,8 +306,9 @@ var app = {
 
         imgContainer.append(img);
         mainContainer.append(imgContainer);
-        mainContainer.append(retakeRow);
-        mainContainer.append(continueRow);
+        mainContainer.append(imgLocation);
+        // mainContainer.append(retakeRow);
+        mainContainer.append(buttonRow);
         content.append(mainContainer);
     },
 
@@ -469,8 +469,20 @@ var app = {
         console.log(err);
     },
 
+    latitude: null,
+    longitude: null,
+
     onDeviceReady: function() {
+        var self = this;
         // app.receivedEvent('deviceready');
+        navigator.geolocation.getCurrentPosition(function(position) {
+            // latitude.html(position.coords.latitude);
+            // longitude.html(position.coords.longitude);
+            self.latitude = position.coords.latitude;
+            self.longitude = position.coords.longitude;
+        }, function(err) {
+            console.log(err);
+        });
     },
 };
 
