@@ -50,7 +50,7 @@ def getReports(request):
         content['report_date'] = reportObject.report_date.strftime('%Y-%m-%d %H:%M:%S')
         content['image_path'] = reportObject.image_path
         content['status'] = reportObject.get_status_display()
-        content['location'] = reportObject.additional_comments.location
+        content['location'] = reportObject.location
         content['additionalComments'] = reportObject.additional_comments
         report_list.append(content)
         # content = reportObject.__dict__
@@ -103,8 +103,8 @@ def getReportsFilter(request,parameters,values):
 @csrf_exempt
 def postReport(request):
     if request.method == 'POST':
-        print request.POST
-        print request.POST.get('animalType')
+        # print request.POST
+        # print request.POST.get('additionalComments')
         categoryObject = Category.objects.get(animal_type = request.POST.get('animalType'))
         latitude = request.POST.get('latitude')
         longitude = request.POST.get('longitude')
@@ -112,7 +112,7 @@ def postReport(request):
         image_path = request.POST.get('imagePath')
         additional_comments = request.POST.get('additionalComments')
         webUrl = ("http://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s"%(latitude,longitude))
-        urlstream = urllib2.urlopen(webUrl)
+        urlstream = urllib2.urlopen(webUrl, timeout=1)
         data = json.loads(urlstream.read())
         location = data['results'][0]["formatted_address"]
         reportObject = Report(
@@ -126,7 +126,7 @@ def postReport(request):
         )
         reportObject.save()
     return HttpResponse( reportObject.id )
-    
+
 
 @csrf_exempt
 def uploadImage(request):
@@ -168,5 +168,5 @@ def uploadImage(request):
 
     # # sure to be free of exceptions
     # return blank
-    
+
     return HttpResponse('/media/' + image_name_saved + ".jpg")
