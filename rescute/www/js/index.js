@@ -172,8 +172,16 @@ var app = {
         content.append(grid);
     },
 
+    removeBackShowAnimalDetails: function() {
+        this.findNearby();
+    },
+
     showAnimalDetails: function(report) {
         var content = $('#content');
+
+        var previousScreenContent = content.html();
+        $(document).on('backbutton', $.proxy(this.removeBackShowAnimalDetails, this));
+
         content.empty();
 
         var container = $('<div/>');

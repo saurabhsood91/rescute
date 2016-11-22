@@ -50,7 +50,7 @@ def getReports(request):
         content['report_date'] = reportObject.report_date.strftime('%Y-%m-%d %H:%M:%S')
         content['image_path'] = reportObject.image_path
         content['status'] = reportObject.get_status_display()
-        content['location'] = reportObject.additional_comments.location
+        content['location'] = reportObject.location
         content['additionalComments'] = reportObject.additional_comments
         report_list.append(content)
         # content = reportObject.__dict__
@@ -126,7 +126,7 @@ def postReport(request):
         )
         reportObject.save()
     return HttpResponse( reportObject.id )
-    
+
 
 @csrf_exempt
 def uploadImage(request):
@@ -168,5 +168,5 @@ def uploadImage(request):
 
     # # sure to be free of exceptions
     # return blank
-    
+
     return HttpResponse('/media/' + image_name_saved + ".jpg")
