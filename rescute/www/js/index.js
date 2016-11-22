@@ -37,9 +37,23 @@ var app = {
         $('#modal-filters').modal('show');
     },
 
+    removeBackFindNearby: function() {
+        $('#content').html(this.currentScreenHTML);
+        this.bindEvents();
+        // document.removeEventListener('backbutton', this.removeBackFindNearby);
+        $(document).off('backbutton');
+    },
+
+    currentScreenHTML: null,
+
     findNearby: function() {
         var self = this;
         var content = $('#content');
+        this.currentScreenHTML = content.html();
+
+        // document.addEventListener('backbutton', $.proxy(this.removeBackFindNearby, this));
+        $(document).on('backbutton', $.proxy(this.removeBackFindNearby, this));
+
         content.empty();
 
         var grid = $('<div/>');
