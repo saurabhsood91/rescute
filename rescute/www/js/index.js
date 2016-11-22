@@ -323,9 +323,7 @@ var app = {
             'src': imageURL,
             'id': 'img-summary'
         });
-        var imgContainer = $('<div />', {
-            'class': 'img-summary-container'
-        });
+        var imgContainer = $('<center />');
         imgContainer.append(img);
 
         // Categories
@@ -461,7 +459,7 @@ var app = {
         content.append(categoriesDiv);
         content.append(mobileNumberContainer);
         content.append(additionalCommentsContainer);
-        content.append(geolocationContainer);
+        // content.append(geolocationContainer);
         content.append(btnContainer);
     },
 
