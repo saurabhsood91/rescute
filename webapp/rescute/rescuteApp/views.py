@@ -50,7 +50,8 @@ def getReports(request):
         content['report_date'] = reportObject.report_date.strftime('%Y-%m-%d %H:%M:%S')
         content['image_path'] = reportObject.image_path
         content['status'] = reportObject.get_status_display()
-        content['location'] = reportObject.location
+        content['location'] = reportObject.additional_comments.location
+        content['additionalComments'] = reportObject.additional_comments
         report_list.append(content)
         # content = reportObject.__dict__
         # # content.remove('_state')
@@ -90,6 +91,7 @@ def getReportsFilter(request,parameters,values):
         content['image_path'] = reportObject.image_path
         content['status'] = reportObject.get_status_display()
         content['location'] = reportObject.location
+        content['additionalComments'] = reportObject.additional_comments
         report_list.append(content)
         # content = reportObject.__dict__
         # # content.remove('_state')
@@ -108,6 +110,7 @@ def postReport(request):
         longitude = request.POST.get('longitude')
         mobile_number = request.POST.get('mobileNumber')
         image_path = request.POST.get('imagePath')
+        additional_comments = request.POST.get('additionalComments')
         webUrl = ("http://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s"%(latitude,longitude))
         urlstream = urllib2.urlopen(webUrl)
         data = json.loads(urlstream.read())
@@ -118,7 +121,8 @@ def postReport(request):
             longitude = longitude,
             mobile_number = mobile_number,
             image_path = image_path,
-            location = location
+            location = location,
+            additional_comments = additional_comments
         )
         reportObject.save()
     return HttpResponse( reportObject.id )

@@ -19,11 +19,12 @@ class Category(models.Model):
 
     
 class Report(models.Model):
-	animal_type = models.ForeignKey(Category)
-	latitude = models.CharField(max_length=10)
-	longitude = models.CharField(max_length=10)
-	mobile_number = models.CharField(max_length=10)
-	report_date = models.DateTimeField(auto_now_add=True)
-	image_path = models.CharField(max_length=200)
-	status = models.IntegerField(choices=REPORT_STATUS, default=0 )
-	location = models.CharField(max_length=300, default="Boulder")
+    animal_type = models.ForeignKey(Category)
+    latitude = models.CharField(max_length=10)
+    longitude = models.CharField(max_length=10)
+    mobile_number = models.CharField(max_length=10)
+    report_date = models.DateTimeField(auto_now_add=True)
+    image_path = models.CharField(max_length=200)
+    status = models.IntegerField(choices=REPORT_STATUS, default=0 )
+    location = models.CharField(max_length=300, default="Boulder")
+    additional_comments = models.CharField(max_length=1000, default="")
