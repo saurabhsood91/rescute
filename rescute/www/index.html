@@ -58,8 +58,12 @@
         </nav>
         <div class="container">
             <div id="content">
-
                     <div class="row" style="margin-top:100px;">
+                        <div class="col-xs-offset-2 col-xs-8">
+                            <button type="button" class="btn btn-primary form-control" id="btn-instructions" data-toggle="modal" data-target="#modal-instructions">Instructions</button>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:15px;">
                         <div class="col-xs-offset-2 col-xs-8">
                             <button type="button" class="btn btn-primary form-control" id="btn-report-lost" >Report Lost Animal</button>
                         </div>
@@ -103,6 +107,28 @@
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
+
+        <div class="modal fade" tabindex="-1" role="dialog" id="modal-instructions">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title glyphicon glyphicon-info-sign">&nbsp;Instructions</h4>
+              </div>
+              <div class="modal-body">
+                  <ul>
+                      <li>If you see an animal you can report the lost / shelterless animal by using this functionality.</li>
+                      <li>You need to be extremely careful while approaching the animals. They may be scared, cold, and you may not be able to identify their temperament.</li>
+                      <li>If you find that the animal is injured, you can help the animal or report with additional comments indicating the status of the animal, and a broader description of where the animal is exactly located to provide some context.</li>
+                  </ul>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
     </body>
