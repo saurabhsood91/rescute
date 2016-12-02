@@ -432,6 +432,9 @@ var app = {
                 additionalComments: additionalComment
             };
 
+            console.log(latitude);
+            console.log(longitude);
+
             // Make AJAX call
             var addReportURL = baseUrl + '/postReport/';
             $.post(addReportURL, data).done(function(d) {
@@ -459,7 +462,8 @@ var app = {
         content.append(categoriesDiv);
         content.append(mobileNumberContainer);
         content.append(additionalCommentsContainer);
-        // content.append(geolocationContainer);
+        content.append(geolocationContainer);
+        geolocationContainer.hide();
         content.append(btnContainer);
     },
 
