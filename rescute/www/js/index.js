@@ -17,7 +17,7 @@
  * under the License.
  */
 var app = {
-    baseUrl: 'http://10.0.0.46:8000',
+    baseUrl: 'http://rescute7806.cloudapp.net:8000',
     // Application Constructor
     initialize: function() {
         this.bindEvents();
